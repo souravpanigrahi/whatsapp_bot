@@ -17,25 +17,29 @@ client.on("auth_failure", (msg) => {
 client.on("ready", () => {
   console.log("Client is ready!");
   client.getChats().then((chats) => {
-    //will display the first whatsapp chat in your application
-    //console.log(chats[0]);
-    //
-    //
+    /*will display the first whatsapp chat in your application
+    console.log(chats[0]);*/
+
+    //will display all the whatsapp chats in your application
+    console.log(chats);
+
     /* For finding a specific chat and replying over and scheduling messages */
-    const myGroup = chats.find((chat) => chat.name === "Hey Fam");
-    console.log(myGroup);
+    const myGroup = chats[0];
+    //console.log(myGroup);
     console.log("I have scheduled a message");
     setTimeout(() => {
       client.sendMessage(
+        myGroup.id._serialized,
         "Hello this is a timed message"
       );
     }, 20000);
   });
 });
+// listening to messages and replying to them
 client.on("message", (message) => {
   if (message.body === "!ping") {
     client.sendMessage(message.from, "pong");
   }
 });
-
+// starting the application
 client.initialize();
